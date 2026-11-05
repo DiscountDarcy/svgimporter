@@ -350,9 +350,8 @@ namespace SVGImporter
         {
             // Always fill or clear vh, with or without a Canvas: uGUI shares one VertexHelper, so leaving it
             // untouched hands this graphic the mesh of the graphic built before it.
-            // Without an asset, a white rectangle as uGUI's Image draws; an asset with nothing to draw draws nothing.
-            if (_vectorGraphics == null) { base.OnPopulateMesh(vh); return; }
-            if (sharedMesh == null) { vh.Clear(); return; }
+            // No asset, or an asset with nothing to draw, draws nothing.
+            if (_vectorGraphics == null || sharedMesh == null) { vh.Clear(); return; }
             vh.Clear();
             Mesh mesh = sharedMesh;
             if(mesh != _streamMesh || _vectorGraphics.importHash != _streamImport || mesh.vertexCount != tempVBOLength)
