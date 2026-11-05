@@ -1124,6 +1124,30 @@ namespace SVGImporter
             return Load(svgText, SVGImportOptions.Default);
         }
 
+        /// <summary>
+        /// The 1.x signature, for code compiled against it. Without settings it imports as 1.x did:
+        /// gradients always on, no soft edges.
+        /// </summary>
+        public static SVGAsset Load(string svgText, SVGImporterSettings settings)
+        {
+            SVGImportOptions options = SVGImportOptions.Default;
+            if(settings == null)
+            {
+                options.useGradients = SVGUseGradients.Always;
+                options.softEdges = false;
+            } else {
+                options.format = settings.defaultSVGFormat;
+                options.pivotPoint = settings.defaultPivotPoint;
+                options.scale = settings.defaultScale;
+                options.depthOffset = settings.defaultDepthOffset;
+                options.compressDepth = settings.defaultCompressDepth;
+                options.ignoreSVGCanvas = settings.defaultIgnoreSVGCanvas;
+                options.useGradients = settings.defaultUseGradients;
+                options.softEdges = settings.defaultAntialiasing;
+            }
+            return Load(svgText, options);
+        }
+
         /// <summary>Imports SVG text with these options. Returns null if the text couldn't be imported.</summary>
         public static SVGAsset Load(string svgText, SVGImportOptions options)
         {
